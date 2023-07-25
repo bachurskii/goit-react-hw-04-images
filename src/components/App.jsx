@@ -5,7 +5,7 @@ import Modal from './modal/Modal';
 import ImageGallery from './imagegalery/ImageGallery';
 import Button from './button/Button';
 import Loader from './loader/Loader';
-import styles from './searchbar/App.module.css';
+import styles from './App.module.css';
 
 export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');

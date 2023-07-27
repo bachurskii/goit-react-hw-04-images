@@ -9,26 +9,34 @@ import styles from './App.module.css';
 
 export class App extends Component {
   state = {
+    searchQuery: '',
     images: [],
     page: 1,
     isLoading: false,
     largeImageURL: '',
     showModal: false,
-    searchQuery: '',
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { searchQuery, page } = this.state;
+
+    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+      this.getImages(searchQuery, page);
+    }
+  }
 
   handleSearchSubmit = query => {
     this.setState({
+      searchQuery: query,
       images: [],
       page: 1,
-      searchQuery: query,
     });
-    this.getImages(query, 1);
   };
 
   handleLoadMore = () => {
-    const { searchQuery, page } = this.state;
-    this.getImages(searchQuery, page + 1);
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }));
   };
 
   handleImageClick = imageURL => {
@@ -50,7 +58,6 @@ export class App extends Component {
     const newImages = await GetImages(query, page);
     this.setState(prevState => ({
       images: [...prevState.images, ...newImages],
-      page: prevState.page + 1,
       isLoading: false,
     }));
   }

@@ -15,10 +15,15 @@ const App = () => {
   const [largeImageURL, setLargeImageURL] = useState('');
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    if (searchQuery.trim() !== '') {
+      setImages([]);
+      setPage(1);
+    }
+  }, [searchQuery]);
+
   const handleSearchSubmit = query => {
-    setSearchQuery(query);
-    setImages([]);
-    setPage(1);
+    setSearchQuery(query.trim());
   };
 
   const handleLoadMore = () => {
@@ -60,5 +65,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;
